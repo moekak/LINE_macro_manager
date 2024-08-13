@@ -1,0 +1,13 @@
+
+moduleをjsで使う方法
+
+1. yarnのインストール
+npm install --global yarn
+
+
+2. webpack.mix.cjsを設定
+
+3. laravel-mix をインストール
+yarn add laravel-mix
+
+4. yarn min コマンド実行
