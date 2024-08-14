@@ -14,7 +14,7 @@
                              <table class="table">
                                     <thead>
                                           <tr>
-                                                <th scope="col">URL</th>
+                                                <th scope="col" style="width: 373px">URL</th>
                                                 <th scope="col">作成日時</th>
                                                 <th scope="col">更新日時</th>
                                                 <th scope="col">管理</th>
@@ -43,7 +43,7 @@
                               <table class="table">
                                     <thead>
                                           <tr>
-                                                <th scope="col">メッセージ</th>
+                                                <th scope="col" style="width: 373px">メッセージ</th>
                                                 <th scope="col">作成日時</th>
                                                 <th scope="col">更新日時</th>
                                                 <th scope="col">管理</th>
@@ -52,11 +52,11 @@
                                     <tbody>
                                           <tr>
                                                 @foreach ($registration_msg as $msg)
-                                                     <td><?= $msg["message"]?></td>
+                                                     <td><textarea name="" id="" class="msg_textarea"><?= $msg["message"]?></textarea></td>
                                                       <td><?= $msg["created_at"]?></td>
                                                       <td><?= $msg["updated_at"]?></td>
-                                                      <td class="operation">
-                                                            <button class="operation_icon edit_icon js_device_edit_btn" data-id="<?= $msg["id"]?>"><img src="{{asset("img/icons8-edit-24.png")}}" alt="" ></button>
+                                                      <td class="operation2">
+                                                            <button class="operation_icon edit_icon js_message_edit_btn" data-id="<?= $msg["id"]?>"><img src="{{asset("img/icons8-edit-24.png")}}" alt="" ></button>
                                                             <form action="" method="post">
                                                                   @csrf
                                                                   <button type="submit" class="operation_icon delete_icon" data-id="<?= $msg["id"]?>"><img src="{{asset("img/icons8-delete-24.png")}}" alt=""></button>      
@@ -75,7 +75,7 @@
                               <table class="table">
                                     <thead>
                                           <tr>
-                                                <th scope="col">URL</th>
+                                                <th scope="col" style="width: 373px">メッセージ</th>
                                                 <th scope="col">作成日時</th>
                                                 <th scope="col">更新日時</th>
                                                 <th scope="col">管理</th>
@@ -86,11 +86,11 @@
                                           @foreach ($group_msg as $msg)
             
                                           <tr>
-                                                <td><?= $msg["message"]?></td>
+                                                <td><textarea name="" id="" class="msg_textarea"><?= $msg["message"]?></textarea></td>
                                                 <td><?= $msg["created_at"]?></td>
                                                 <td><?= $msg["updated_at"]?></td>
-                                                <td class="operation">
-                                                      <button class="operation_icon edit_icon js_device_edit_btn" ><img src="{{asset("img/icons8-edit-24.png")}}" alt="" ></button>
+                                                <td class="operation2">
+                                                      <button class="operation_icon edit_icon js_group_message_edit_btn" data-id="<?= $msg["id"]?>"><img src="{{asset("img/icons8-edit-24.png")}}" alt="" ></button>
                                                       <form action="" method="post">
                                                             @csrf
                                                             <button type="submit" class="operation_icon delete_icon" ><img src="{{asset("img/icons8-delete-24.png")}}" alt=""></button>      
@@ -126,6 +126,58 @@
                         <input type="text" class="form-control js_url_account_input" id="formGroupExampleInput" name="url" value="{{old("url")}}">
                   </div>
                   <input type="hidden" name="url_id" class="js_url_id_input" value="{{old("url_id")}}">
+                  <button type="submit" class="modal__container-btn">更新</button>
+            </form>
+      </section>
+      {{-- 自動返信編集モーダル --}}
+      <section class="modal__container js_message_edit_modal js_modal hidden">
+            <h3 class="modal__container-ttl">自動返信メッセージ編集</h3>
+            @if ($errors->any())
+            <div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
+                  <ul>
+                  @foreach ($errors->all() as $error)
+                        <li class="alert_danger">{{$error}}</li>
+                        @endforeach  
+                  </ul>   
+            </div>  
+            @endif
+            <form action="{{ route('message.update', ['id' => ':id']) }}" method="post" id="js_edit_message_form">
+                  @csrf
+                  <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">メッセージ</label>
+                        <textarea class="form-control js_message_input" id="exampleFormControlTextarea1" rows="3" name="message">{{old("message")}}</textarea>
+                      </div>
+                  {{-- <div class="mb-3">
+                        <label for="formGroupExampleInput" class="form-label">メッセージ</label>
+                        <input type="text" class="form-control js_message_input" id="formGroupExampleInput" name="message" value="{{old("message")}}">
+                  </div> --}}
+                  <input type="hidden" name="message_id" class="js_message_id_input" value="{{old("message_id")}}">
+                  <button type="submit" class="modal__container-btn">更新</button>
+            </form>
+      </section>
+      {{-- 一斉送信編集モーダル --}}
+      <section class="modal__container js_group_message_edit_modal js_modal hidden">
+            <h3 class="modal__container-ttl">一斉送信メッセージ編集</h3>
+            @if ($errors->any())
+            <div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
+                  <ul>
+                  @foreach ($errors->all() as $error)
+                        <li class="alert_danger">{{$error}}</li>
+                        @endforeach  
+                  </ul>   
+            </div>  
+            @endif
+            <form action="{{ route('message.update', ['id' => ':id']) }}" method="post" id="js_edit_group_message_form">
+                  @csrf
+                  <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">メッセージ</label>
+                        <textarea class="form-control js_group_message_input" id="exampleFormControlTextarea1" rows="3" name="group_message">{{old("message")}}</textarea>
+                      </div>
+                  {{-- <div class="mb-3">
+                        <label for="formGroupExampleInput" class="form-label">メッセージ</label>
+                        <input type="text" class="form-control js_message_input" id="formGroupExampleInput" name="message" value="{{old("message")}}">
+                  </div> --}}
+                  <input type="hidden" name="group_message_id" class="js_group_message_id_input" value="{{old("message_id")}}">
                   <button type="submit" class="modal__container-btn">更新</button>
             </form>
       </section>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateRegistrationMessageRequest;
 use App\Models\MessageUrl;
 use App\Models\RegistrationMessage;
 use Illuminate\Http\Request;
@@ -45,15 +46,24 @@ class RegistrationMessageController extends Controller
      */
     public function edit($id)
     {
+        $message_data = RegistrationMessage::find($id);
+        return response()->json($message_data);
 
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, RegistrationMessage $registrationMessage)
+    public function update(UpdateRegistrationMessageRequest $request, $id)
     {
-        //
+        $validated = $request->validated();
+        $message = RegistrationMessage::findOrFail($id);
+
+        $message->update(["message" => $validated["message"]]);
+        $device_id = session("device_id");
+
+        return redirect()->route("device.show", ["id" => $device_id])->with("success", "自動返信メッセージの更新に成功しました。");
+
     }
 
     /**

@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\GroupMessageController;
 use App\Http\Controllers\MessageUrlController;
+use App\Http\Controllers\RegistrationMessageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,3 +29,8 @@ Route::get("/device/show/{id}", [DeviceController::class, "show"])->name("device
 
 Route::post("/url/update/{id}", [MessageUrlController::class, "update"])->name("url.update");
 Route::get("/url/edit/{id}", [MessageUrlController::class, "edit"])->name("url.edit");
+Route::get("/message/edit/{id}", [RegistrationMessageController::class, "edit"])->name("message.edit");
+Route::post("/message/update/{id}", [RegistrationMessageController::class, "update"])->name("message.update");
+
+
+Route::get("/group_message/edit/{id}", [GroupMessageController::class, "edit"])->name("group_message.edit");

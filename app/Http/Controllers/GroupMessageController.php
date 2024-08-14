@@ -42,9 +42,11 @@ class GroupMessageController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(GroupMessage $groupMessage)
+    public function edit($id)
     {
-        //
+        $group_message = GroupMessage::find($id);
+
+        return response()->json($group_message);
     }
 
     /**

@@ -148,17 +148,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _module_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/util/fetch.js */ "./resources/js/module/util/fetch.js");
 
 
+
+// URL編集
 var edit_btn = document.querySelector(".js_url_edit_btn");
 var edit_modal = document.querySelector(".js_url_edit_modal");
-console.log(edit_btn);
 edit_btn.addEventListener("click", function (e) {
   var target_btn = e.currentTarget;
   console.log(target_btn);
   var url_id = target_btn.getAttribute("data-id");
-  var form = document.getElementById('js_edit_url_form');
-  var action = form.getAttribute('action');
-  action = action.replace(':id', url_id);
-  form.setAttribute('action', action);
+  var form = document.getElementById("js_edit_url_form");
+  var action = form.getAttribute("action");
+  action = action.replace(":id", url_id);
+  form.setAttribute("action", action);
   (0,_module_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("/url/edit/".concat(url_id)).then(function (res) {
     console.log(res);
     setUrlDataForEditing(res).then(function () {
@@ -166,6 +167,55 @@ edit_btn.addEventListener("click", function (e) {
     });
   });
 });
+
+// 自動返信メッセージの処理
+var message_btn = document.querySelector(".js_message_edit_btn");
+var message_modal = document.querySelector(".js_message_edit_modal");
+message_btn.addEventListener("click", function (e) {
+  var target_btn = e.currentTarget;
+  var message_id = target_btn.getAttribute("data-id");
+  var form = document.getElementById("js_edit_message_form");
+  var action = form.getAttribute("action");
+  action = action.replace(":id", message_id);
+  form.setAttribute("action", action);
+  (0,_module_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("/message/edit/".concat(message_id)).then(function (res) {
+    console.log(res);
+    setMessageDataForEditing(res).then(function () {
+      (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.open_modal)(message_modal);
+    });
+  });
+});
+// 一斉送信メッセージの処理
+var group_message_btns = document.querySelectorAll(".js_group_message_edit_btn");
+var group_message_modal = document.querySelector(".js_group_message_edit_modal");
+group_message_btns.forEach(function (btn) {
+  btn.addEventListener("click", function (e) {
+    var target_btn = e.currentTarget;
+    var group_message_id = target_btn.getAttribute("data-id");
+    var form = document.getElementById("js_edit_message_form");
+    var action = form.getAttribute("action");
+    action = action.replace(":id", group_message_id);
+    form.setAttribute("action", action);
+    (0,_module_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("/group_message/edit/".concat(group_message_id)).then(function (res) {
+      console.log(res);
+      setGroupMessageDataForEditing(res).then(function () {
+        (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.open_modal)(group_message_modal);
+      });
+    });
+  });
+});
+
+// 自動返信メッセージ編集
+var setMessageDataForEditing = function setMessageDataForEditing(res) {
+  return new Promise(function (resolve) {
+    var message_input = document.querySelector(".js_message_input");
+    var id_input = document.querySelector(".js_message_id_input");
+    message_input.value = res["message"];
+    id_input.value = res["id"];
+    resolve();
+  });
+};
+// url編集
 var setUrlDataForEditing = function setUrlDataForEditing(res) {
   return new Promise(function (resolve) {
     var url_input = document.querySelector(".js_url_account_input");
@@ -176,9 +226,20 @@ var setUrlDataForEditing = function setUrlDataForEditing(res) {
   });
 };
 
+// 一斉送信メッセージ編集
+var setGroupMessageDataForEditing = function setGroupMessageDataForEditing(res) {
+  return new Promise(function (resolve) {
+    var group_message_input = document.querySelector(".js_group_message_input");
+    var id_input = document.querySelector(".js_group_message_id_input");
+    group_message_input.value = res["message"];
+    id_input.value = res["id"];
+    resolve();
+  });
+};
+
 // ページがロードされた後に5秒待ってメッセージを非表示にする
-document.addEventListener('DOMContentLoaded', function () {
-  var alert = document.getElementById('js_alert_success');
+document.addEventListener("DOMContentLoaded", function () {
+  var alert = document.getElementById("js_alert_success");
   if (alert) {
     setTimeout(function () {
       alert.style.display = "none";
