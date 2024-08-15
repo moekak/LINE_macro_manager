@@ -192,7 +192,7 @@ group_message_btns.forEach(function (btn) {
   btn.addEventListener("click", function (e) {
     var target_btn = e.currentTarget;
     var group_message_id = target_btn.getAttribute("data-id");
-    var form = document.getElementById("js_edit_message_form");
+    var form = document.getElementById("js_edit_group_message_form");
     var action = form.getAttribute("action");
     action = action.replace(":id", group_message_id);
     form.setAttribute("action", action);
@@ -247,5 +247,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.close_modal)();
+var message_create_btn = document.getElementById("js_create_group_message_btn");
+var message_create_modal = document.querySelector(".js_group_message_create_modal");
+message_create_btn.addEventListener("click", function () {
+  (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.open_modal)(message_create_modal);
+});
 /******/ })()
 ;

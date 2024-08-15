@@ -175,6 +175,12 @@ nav {
     background-color: #fff;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px
 }
+.section__detail-table-top{
+    display: flex;
+    align-items: center;
+gap: 30px;
+margin-bottom: 13px;
+}
 .msg_textarea{
     width: 100%;
     border: none;

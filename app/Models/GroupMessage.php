@@ -9,5 +9,10 @@ class GroupMessage extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        "message",
+        "time_id"
+    ];
+
   
 }

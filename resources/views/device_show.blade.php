@@ -14,7 +14,7 @@
                              <table class="table">
                                     <thead>
                                           <tr>
-                                                <th scope="col" style="width: 373px">URL</th>
+                                                <th scope="col" style="width: 420px">URL</th>
                                                 <th scope="col">作成日時</th>
                                                 <th scope="col">更新日時</th>
                                                 <th scope="col">管理</th>
@@ -28,10 +28,7 @@
                                                       <td><?= $url["updated_at"]?></td>
                                                       <td class="operation">
                                                             <button class="operation_icon edit_icon js_url_edit_btn" data-id="<?= $url["id"]?>"><img src="{{asset("img/icons8-edit-24.png")}}" alt="" ></button>
-                                                            <form action="" method="post">
-                                                                  @csrf
-                                                                  <button type="submit" class="operation_icon delete_icon" data-id="<?= $url["id"]?>"><img src="{{asset("img/icons8-delete-24.png")}}" alt=""></button>      
-                                                            </form>
+                                                 
                                                       </td>
                                                 @endforeach        
                                           </tr>
@@ -43,7 +40,7 @@
                               <table class="table">
                                     <thead>
                                           <tr>
-                                                <th scope="col" style="width: 373px">メッセージ</th>
+                                                <th scope="col" style="width: 420px">メッセージ</th>
                                                 <th scope="col">作成日時</th>
                                                 <th scope="col">更新日時</th>
                                                 <th scope="col">管理</th>
@@ -57,10 +54,7 @@
                                                       <td><?= $msg["updated_at"]?></td>
                                                       <td class="operation2">
                                                             <button class="operation_icon edit_icon js_message_edit_btn" data-id="<?= $msg["id"]?>"><img src="{{asset("img/icons8-edit-24.png")}}" alt="" ></button>
-                                                            <form action="" method="post">
-                                                                  @csrf
-                                                                  <button type="submit" class="operation_icon delete_icon" data-id="<?= $msg["id"]?>"><img src="{{asset("img/icons8-delete-24.png")}}" alt=""></button>      
-                                                            </form>
+                                                            
                                                       </td>
                                                 @endforeach
 
@@ -71,11 +65,15 @@
                               </table> 
                         </div>
                         <div class="section__detail-table">
-                              <h3>一斉配信</h3>
+                              <div class="section__detail-table-top">
+                                   <h3>一斉配信</h3> 
+                                   <button type="button" class="btn btn-secondary" id="js_create_group_message_btn">追加</button>
+                              </div>
+                              
                               <table class="table">
                                     <thead>
                                           <tr>
-                                                <th scope="col" style="width: 373px">メッセージ</th>
+                                                <th scope="col" style="width: 420px">メッセージ</th>
                                                 <th scope="col">作成日時</th>
                                                 <th scope="col">更新日時</th>
                                                 <th scope="col">管理</th>
@@ -91,8 +89,9 @@
                                                 <td><?= $msg["updated_at"]?></td>
                                                 <td class="operation2">
                                                       <button class="operation_icon edit_icon js_group_message_edit_btn" data-id="<?= $msg["id"]?>"><img src="{{asset("img/icons8-edit-24.png")}}" alt="" ></button>
-                                                      <form action="" method="post">
+                                                      <form action="{{route('group_message.destroy', ['id' => $msg['id']])}}" method="post">
                                                             @csrf
+                                                            @method("DELETE")
                                                             <button type="submit" class="operation_icon delete_icon" ><img src="{{asset("img/icons8-delete-24.png")}}" alt=""></button>      
                                                       </form>
                                                 </td> 
@@ -167,18 +166,36 @@
                   </ul>   
             </div>  
             @endif
-            <form action="{{ route('message.update', ['id' => ':id']) }}" method="post" id="js_edit_group_message_form">
+            <form action="{{ route('group_message.update', ['id' => ':id']) }}" method="post" id="js_edit_group_message_form">
                   @csrf
                   <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">メッセージ</label>
-                        <textarea class="form-control js_group_message_input" id="exampleFormControlTextarea1" rows="3" name="group_message">{{old("message")}}</textarea>
+                        <textarea class="form-control js_group_message_input" id="exampleFormControlTextarea1" rows="3" name="group_message">{{old("group_message")}}</textarea>
                       </div>
-                  {{-- <div class="mb-3">
-                        <label for="formGroupExampleInput" class="form-label">メッセージ</label>
-                        <input type="text" class="form-control js_message_input" id="formGroupExampleInput" name="message" value="{{old("message")}}">
-                  </div> --}}
-                  <input type="hidden" name="group_message_id" class="js_group_message_id_input" value="{{old("message_id")}}">
+                  <input type="hidden" name="group_message_id" class="js_group_message_id_input" value="{{old("group_message_id")}}">
                   <button type="submit" class="modal__container-btn">更新</button>
+            </form>
+      </section>
+      {{-- 一斉送信追加モーダル --}}
+      <section class="modal__container js_group_message_create_modal js_modal hidden">
+            <h3 class="modal__container-ttl">一斉送信メッセージ追加</h3>
+            @if ($errors->any())
+            <div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
+                  <ul>
+                  @foreach ($errors->all() as $error)
+                        <li class="alert_danger">{{$error}}</li>
+                        @endforeach  
+                  </ul>   
+            </div>  
+            @endif
+            <form action="{{ route("group_message.store")}}" method="post" id="js_create_group_message_form">
+                  @csrf
+                  <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">メッセージ</label>
+                        <textarea class="form-control js_group_message_input" id="exampleFormControlTextarea1" rows="3" name="group_message">{{old("group_message")}}</textarea>
+                      </div>
+                      <input type="hidden" name="device_id" value="{{request()->route('id')}}" >
+                  <button type="submit" class="modal__container-btn">追加</button>
             </form>
       </section>
     
@@ -189,10 +206,8 @@
 @if ($errors->any())
 @php
       $currentRoute =session('route_name');
-      print_r($currentRoute);
+
 @endphp
-
-
       @if ($currentRoute === 'url.edit')
             <script>
                   document.querySelector(".js_url_edit_modal").classList.remove("hidden")
@@ -205,12 +220,28 @@
             </script>
             
             
-      @elseif ($currentRoute === 'device.store')
+      @elseif ($currentRoute === 'message.edit')
             <script>
-                  console.log("222");
-                  document.querySelector(".js_create_modal").classList.remove("hidden")
+                  document.querySelector(".js_message_edit_modal").classList.remove("hidden")
                   document.querySelector(".bg").classList.remove("hidden")
+
+                  let form = document.getElementById('js_edit_message_form');
+                  let action = form.getAttribute('action');
+                  action = action.replace(':id', document.querySelector(".js_message_id_input").value);
+                  form.setAttribute('action', action)
             </script>  
+      @elseif ($currentRoute === 'group_message.edit')
+            <script>
+                  document.querySelector(".js_group_message_edit_modal").classList.remove("hidden")
+                  document.querySelector(".bg").classList.remove("hidden")
+
+                  let form = document.getElementById('js_edit_group_message_form');
+                  let action = form.getAttribute('action');
+                  action = action.replace(':id', document.querySelector(".js_group_message_id_input").value);
+                  form.setAttribute('action', action)
+
+                  console.log(document.querySelector(".js_group_message_id_input").value);
+            </script>   
       @endif
 
 @endif

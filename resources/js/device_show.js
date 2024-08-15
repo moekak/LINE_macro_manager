@@ -50,7 +50,7 @@ group_message_btns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
         let target_btn = e.currentTarget;
         let group_message_id = target_btn.getAttribute("data-id");
-        let form = document.getElementById("js_edit_message_form");
+        let form = document.getElementById("js_edit_group_message_form");
         let action = form.getAttribute("action");
         action = action.replace(":id", group_message_id);
         form.setAttribute("action", action);
@@ -113,3 +113,11 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 close_modal();
+
+
+
+const message_create_btn = document.getElementById("js_create_group_message_btn")
+const message_create_modal = document.querySelector(".js_group_message_create_modal")
+message_create_btn.addEventListener("click", ()=>{
+    open_modal(message_create_modal)
+})
