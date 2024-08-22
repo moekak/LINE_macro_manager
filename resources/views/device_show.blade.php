@@ -88,6 +88,12 @@
                         </div>
                         <div class="section__detail-table">
                               <h3>自動返信</h3>
+                              <div class="alert alert-primary alert-dismissible fade show" role="alert" style="margin-top: 13px;">
+                                    <ul>
+                                          <li>ユーザー名に置き換える際は<strong>{Nickname}</strong>としてください。</li>
+                                    </ul>
+      
+                                  </div>
                               <table class="table">
                                     <thead>
                                           <tr>
@@ -215,7 +221,7 @@
                   @csrf
                   <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">メッセージ</label>
-                        <textarea class="form-control js_message_input" id="exampleFormControlTextarea1" rows="3" name="message">{{old("message")}}</textarea>
+                        <textarea class="form-control js_message_input" id="exampleFormControlTextarea1" rows="10" name="message">{{old("message")}}</textarea>
                       </div>
                   {{-- <div class="mb-3">
                         <label for="formGroupExampleInput" class="form-label">メッセージ</label>
@@ -241,7 +247,7 @@
                   @csrf
                   <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">メッセージ</label>
-                        <textarea class="form-control js_group_message_input" id="exampleFormControlTextarea1" rows="3" name="group_message">{{old("group_message")}}</textarea>
+                        <textarea class="form-control js_group_message_input" id="exampleFormControlTextarea1" rows="10" name="group_message">{{old("group_message")}}</textarea>
                       </div>
                   <input type="hidden" name="group_message_id" class="js_group_message_id_input" value="{{old("group_message_id")}}">
                   <button type="submit" class="modal__container-btn">更新</button>
@@ -263,7 +269,7 @@
                   @csrf
                   <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">メッセージ</label>
-                        <textarea class="form-control js_group_message_input" id="exampleFormControlTextarea1" rows="3" name="group_message">{{old("group_message")}}</textarea>
+                        <textarea class="form-control js_group_message_input" id="exampleFormControlTextarea1" rows="10" name="group_message">{{old("group_message")}}</textarea>
                       </div>
                       <input type="hidden" name="device_id" value="{{request()->route('id')}}" >
                   <button type="submit" class="modal__container-btn">追加</button>
