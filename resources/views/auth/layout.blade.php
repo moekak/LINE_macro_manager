@@ -12,16 +12,24 @@
 <body>
       <section class="signup__wrapper">
             
-            @if ($errors->any())
-            @foreach ($errors->all() as $error)
-                  <p>{{$error}}</p>  
-            @endforeach
-                
-            @endif
             <div class="signup__wrapper-top">
                  <img src="{{asset("img/icons8-user-48.png")}}" alt="">
                  @yield('title')
             </div>
+            
+            @if ($errors->any())
+                  <div class="alert alert-danger" role="alert">
+                        <ul>
+                              @foreach ($errors->all() as $error)
+                              <li>
+                                    {{$error}}
+                              </li>
+                              @endforeach
+                        </ul>
+                        
+                </div>
+                
+            @endif
             
             <div class="signup__wrapper-input">
                   @yield('form')

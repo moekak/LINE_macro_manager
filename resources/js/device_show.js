@@ -5,7 +5,8 @@ import { fetchGetOperation } from "./module/util/fetch.js";
 const edit_btn = document.querySelector(".js_url_edit_btn");
 const edit_modal = document.querySelector(".js_url_edit_modal");
 
-edit_btn.addEventListener("click", (e) => {
+if(edit_btn){
+    edit_btn.addEventListener("click", (e) => {
     let target_btn = e.currentTarget;
 
     console.log(target_btn);
@@ -22,31 +23,36 @@ edit_btn.addEventListener("click", (e) => {
         });
     });
 });
+}
+
 
 // 自動返信メッセージの処理
 const message_btn = document.querySelector(".js_message_edit_btn");
 const message_modal = document.querySelector(".js_message_edit_modal");
 
-message_btn.addEventListener("click", (e) => {
-    let target_btn = e.currentTarget;
-    let message_id = target_btn.getAttribute("data-id");
-    let form = document.getElementById("js_edit_message_form");
-    let action = form.getAttribute("action");
-    action = action.replace(":id", message_id);
-    form.setAttribute("action", action);
+if(message_btn){
+    message_btn.addEventListener("click", (e) => {
+        let target_btn = e.currentTarget;
+        let message_id = target_btn.getAttribute("data-id");
+        let form = document.getElementById("js_edit_message_form");
+        let action = form.getAttribute("action");
+        action = action.replace(":id", message_id);
+        form.setAttribute("action", action);
 
-    fetchGetOperation(`/message/edit/${message_id}`).then((res) => {
-        console.log(res);
-        setMessageDataForEditing(res).then(() => {
-            open_modal(message_modal);
+        fetchGetOperation(`/message/edit/${message_id}`).then((res) => {
+            console.log(res);
+            setMessageDataForEditing(res).then(() => {
+                open_modal(message_modal);
+            });
         });
     });
-});
+}
+
 // 一斉送信メッセージの処理
 const group_message_btns = document.querySelectorAll(".js_group_message_edit_btn");
 const group_message_modal = document.querySelector(".js_group_message_edit_modal");
-
-group_message_btns.forEach((btn) => {
+if(group_message_btns){
+    group_message_btns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
         let target_btn = e.currentTarget;
         let group_message_id = target_btn.getAttribute("data-id");
@@ -63,6 +69,8 @@ group_message_btns.forEach((btn) => {
         });
     });
 });
+
+}
 
 // 自動返信メッセージ編集
 const setMessageDataForEditing = (res) => {

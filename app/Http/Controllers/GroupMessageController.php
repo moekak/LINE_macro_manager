@@ -41,8 +41,16 @@ class GroupMessageController extends Controller
             
         ];
 
-        $messageSendingTime = MessageSendingTime::create($data);
-        $insertId = $messageSendingTime->id;
+        $existingRecord = MessageSendingTime::where("device_id", $data["device_id"])->first();
+
+        if(!$existingRecord){
+            $messageSendingTime = MessageSendingTime::create($data);
+            $insertId = $messageSendingTime->id;
+        }else{
+            $insertId = $existingRecord->id;
+        }
+
+        
 
         $group_message_data = [
             "time_id" => $insertId,
@@ -99,5 +107,16 @@ class GroupMessageController extends Controller
         return redirect()->route("device.show", ["id" => $device_id])->with("success", "一斉送信メッセージの削除に成功しました。");
 
         
+    }
+
+
+    public function updateIsSent($id){
+        $data = [
+            "is_sent" => "0"
+        ];
+        MessageSendingTime::where("device_id", $id)->update($data);
+
+        $device_id = session("device_id");
+        return redirect()->route("device.show", ["id" => $device_id])->with("success", "一斉送信が開始されます。");
     }
 }

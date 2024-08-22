@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateDeviceRequest;
 use App\Http\Requests\EditDeviceRequest;
 use App\Models\Device;
+use App\Models\FriendCount;
 use App\Models\GroupMessage;
 use App\Models\MessageSendingTime;
 use App\Models\MessageUrl;
@@ -43,7 +44,15 @@ class DeviceController extends Controller
         $user = Auth::user();
         $validated = $request->validated();
         $validated["user_id"] = $user->id;
-        Device::create($validated);
+        $device = Device::create($validated);
+
+
+        $data = [
+            "device_id" => $device->id,
+            "count" => 0 
+        ];
+
+        FriendCount::create($data);
 
         return redirect()->route("device")->with("デバイス情報の追加に成功しました");
     }

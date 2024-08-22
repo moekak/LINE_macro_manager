@@ -12,6 +12,7 @@ body {
     font-family: "Zen Kaku Gothic New", sans-serif !important;
     font-weight: 400;
     font-style: normal;
+    overflow-x: hidden;
 }
 main {
     display: flex;
@@ -19,6 +20,7 @@ main {
 
 p, ul {
     margin: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 /* アラート */
@@ -68,6 +70,10 @@ nav {
     padding: 20px 30px;
     color: #ffff;
     font-size: 17px;
+}
+.nav__item-option a{
+    text-decoration: none;
+    color: #fff;
 }
 .logout_btn {
     border: none;
@@ -178,8 +184,9 @@ nav {
 .section__detail-table-top{
     display: flex;
     align-items: center;
-gap: 30px;
-margin-bottom: 13px;
+    gap: 30px;
+    margin-bottom: 13px;
+    justify-content: space-between;
 }
 .msg_textarea{
     width: 100%;
@@ -188,3 +195,15 @@ margin-bottom: 13px;
 /* .registration_msg_textarea::-webkit-scrollbar{
     width: 10px;
 } */
+ .section__detail-table-btn{
+    display: flex;
+    gap: 10px;
+ }
+
+ /* alert */
+ .alert-primary ul{
+    font-size: 14px;
+ }
+.alert-primary{
+    width: max-content;
+}

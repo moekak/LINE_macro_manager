@@ -35,3 +35,4 @@ Route::get("/group_message/edit/{id}", [GroupMessageController::class, "edit"])-
 Route::post("/group_message/update/{id}", [GroupMessageController::class, "update"])->name("group_message.update")->middleware("auth");
 Route::delete("/group_message/delete/{id}", [GroupMessageController::class, "destroy"])->name("group_message.destroy");
 Route::post("/group_message/create", [GroupMessageController::class, "store"])->name("group_message.store")->middleware("auth");
+Route::post("/group_message/is_sent/update/{id}", [GroupMessageController::class, "updateIsSent"])->name("groupMsg.update");

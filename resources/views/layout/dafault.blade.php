@@ -20,14 +20,9 @@
                   </div>
                   @if (Route::currentRouteName() !== "device")
                         <div class="nav__item-option">
-                              <p>一斉送信</p>
+                              <a href="{{ route("device")}}"><p>ホーム</p></a>
                         </div>
-                        <div class="nav__item-option">
-                              <p>自動返信</p>
-                        </div>
-                        <div class="nav__item-option">
-                              <p>URL設定</p>
-                        </div>
+
                   @endif
                    
             </div>

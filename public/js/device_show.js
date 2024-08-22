@@ -152,58 +152,65 @@ __webpack_require__.r(__webpack_exports__);
 // URL編集
 var edit_btn = document.querySelector(".js_url_edit_btn");
 var edit_modal = document.querySelector(".js_url_edit_modal");
-edit_btn.addEventListener("click", function (e) {
-  var target_btn = e.currentTarget;
-  console.log(target_btn);
-  var url_id = target_btn.getAttribute("data-id");
-  var form = document.getElementById("js_edit_url_form");
-  var action = form.getAttribute("action");
-  action = action.replace(":id", url_id);
-  form.setAttribute("action", action);
-  (0,_module_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("/url/edit/".concat(url_id)).then(function (res) {
-    console.log(res);
-    setUrlDataForEditing(res).then(function () {
-      (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.open_modal)(edit_modal);
+if (edit_btn) {
+  edit_btn.addEventListener("click", function (e) {
+    var target_btn = e.currentTarget;
+    console.log(target_btn);
+    var url_id = target_btn.getAttribute("data-id");
+    var form = document.getElementById("js_edit_url_form");
+    var action = form.getAttribute("action");
+    action = action.replace(":id", url_id);
+    form.setAttribute("action", action);
+    (0,_module_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("/url/edit/".concat(url_id)).then(function (res) {
+      console.log(res);
+      setUrlDataForEditing(res).then(function () {
+        (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.open_modal)(edit_modal);
+      });
     });
   });
-});
+}
 
 // 自動返信メッセージの処理
 var message_btn = document.querySelector(".js_message_edit_btn");
 var message_modal = document.querySelector(".js_message_edit_modal");
-message_btn.addEventListener("click", function (e) {
-  var target_btn = e.currentTarget;
-  var message_id = target_btn.getAttribute("data-id");
-  var form = document.getElementById("js_edit_message_form");
-  var action = form.getAttribute("action");
-  action = action.replace(":id", message_id);
-  form.setAttribute("action", action);
-  (0,_module_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("/message/edit/".concat(message_id)).then(function (res) {
-    console.log(res);
-    setMessageDataForEditing(res).then(function () {
-      (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.open_modal)(message_modal);
-    });
-  });
-});
-// 一斉送信メッセージの処理
-var group_message_btns = document.querySelectorAll(".js_group_message_edit_btn");
-var group_message_modal = document.querySelector(".js_group_message_edit_modal");
-group_message_btns.forEach(function (btn) {
-  btn.addEventListener("click", function (e) {
+if (message_btn) {
+  message_btn.addEventListener("click", function (e) {
     var target_btn = e.currentTarget;
-    var group_message_id = target_btn.getAttribute("data-id");
-    var form = document.getElementById("js_edit_group_message_form");
+    var message_id = target_btn.getAttribute("data-id");
+    var form = document.getElementById("js_edit_message_form");
     var action = form.getAttribute("action");
-    action = action.replace(":id", group_message_id);
+    action = action.replace(":id", message_id);
     form.setAttribute("action", action);
-    (0,_module_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("/group_message/edit/".concat(group_message_id)).then(function (res) {
+    (0,_module_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("/message/edit/".concat(message_id)).then(function (res) {
       console.log(res);
-      setGroupMessageDataForEditing(res).then(function () {
-        (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.open_modal)(group_message_modal);
+      setMessageDataForEditing(res).then(function () {
+        (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.open_modal)(message_modal);
       });
     });
   });
-});
+}
+
+// 一斉送信メッセージの処理
+var group_message_btns = document.querySelectorAll(".js_group_message_edit_btn");
+var group_message_modal = document.querySelector(".js_group_message_edit_modal");
+if (group_message_btns) {
+  group_message_btns.forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      var target_btn = e.currentTarget;
+      var group_message_id = target_btn.getAttribute("data-id");
+      var form = document.getElementById("js_edit_group_message_form");
+      var action = form.getAttribute("action");
+      action = action.replace(":id", group_message_id);
+      form.setAttribute("action", action);
+      (0,_module_util_fetch_js__WEBPACK_IMPORTED_MODULE_1__.fetchGetOperation)("/group_message/edit/".concat(group_message_id)).then(function (res) {
+        console.log(res);
+        setGroupMessageDataForEditing(res).then(function () {
+          (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.open_modal)(group_message_modal);
+        });
+      });
+    });
+  });
+}
 
 // 自動返信メッセージ編集
 var setMessageDataForEditing = function setMessageDataForEditing(res) {

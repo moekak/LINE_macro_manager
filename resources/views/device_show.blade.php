@@ -67,8 +67,29 @@
                         <div class="section__detail-table">
                               <div class="section__detail-table-top">
                                    <h3>一斉配信</h3> 
-                                   <button type="button" class="btn btn-secondary" id="js_create_group_message_btn">追加</button>
+                                   <div class="section__detail-table-btn">
+                                          <button type="button" class="btn btn-secondary" id="js_create_group_message_btn">追加</button>
+                                          @php
+                                                $routeId = request()->route('id');
+                                                $url = route('groupMsg.update', ['id' => $routeId]);
+                                          @endphp
+                                          <form action="{{$url}}" method="post">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success" id="js_create_group_message_btn">送信</button>
+                                          </form>
+                        
+                                   </div>
+                                   
+                              
+                                   
                               </div>
+                              <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                                    <ul>
+                                          <li>メッセージを1つ以上設定してください。</li>
+                                          <li>一斉送信完了後、再度送信する際は送信ボタンを押してください。</li>
+                                    </ul>
+      
+                                  </div>
                               
                               <table class="table">
                                     <thead>
