@@ -174,12 +174,25 @@ nav {
     margin-top: 40px;
 
 }
+.table_container{
+    width: 100%;
+    overflow-x: auto;
+}
+.disable-btn{
+    opacity: 50%;
+    pointer-events: none;
+}
 .section__detail-table{
     width: 100%;
     margin-top: 10px;
     padding: 30px;
     background-color: #fff;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px;
+ 
+}
+.section__detail-table-flex{
+    display: flex;
+    justify-content: space-between;
 }
 .section__detail-table-top{
     display: flex;

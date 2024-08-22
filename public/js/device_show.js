@@ -259,5 +259,22 @@ var message_create_modal = document.querySelector(".js_group_message_create_moda
 message_create_btn.addEventListener("click", function () {
   (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.open_modal)(message_create_modal);
 });
+var select = document.querySelector(".js_select_element");
+var btn = document.querySelector(".js_select_btn");
+select.addEventListener("change", function (e) {
+  console.log(e.target.value); // 選択された値をコンソールに表示
+  var value = e.target.value;
+  if (value && value !== "日付を選択してください") {
+    btn.classList.remove("disable-btn");
+  } else {
+    btn.classList.add("disable-btn");
+  }
+});
+var form = document.getElementById("js_date_form");
+form.addEventListener("keydown", function (e) {
+  if (event.key === 'Enter') {
+    event.preventDefault(); // Enterキーによるデフォルトの動作（送信）を無効化
+  }
+});
 /******/ })()
 ;

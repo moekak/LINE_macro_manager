@@ -12,6 +12,7 @@ use App\Models\MessageUrl;
 use App\Models\RegistrationMessage;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -60,7 +61,7 @@ class DeviceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         session(['device_id' => $id]);
 
@@ -78,9 +79,64 @@ class DeviceController extends Controller
         }
 
 
-    
-        return view("device_show", ["url" => $url, "registration_msg" => $registration_msg, "group_msg" => $allMessages]);
+        if($request->isMethod("get")){
+            $today = Carbon::today()->format("Y-m");
+
+            // 年と月を分割
+            list($year, $month) = explode('-', $today);
+
+            $friendCounts = FriendCount::where('device_id', $id)
+                ->whereYear('created_at', $year)
+                ->whereMonth('created_at', $month)
+                ->get()
+                ->groupBy(function($date) {
+                    return Carbon::parse($date->created_at)->format('d');
+                });
+
+
+                session(['date' => "{$year}年{$month}月"]);
+                $daysData = [];
+                for ($day = 1; $day <= 31; $day++) {
+                    $daysData[$day] = isset($friendCounts[$day]) ? $friendCounts[$day][0]->count : 0;
+                }
+        
+                return view("device_show", ["url" => $url, "registration_msg" => $registration_msg, "group_msg" => $allMessages, "daysData" => $daysData]);
+            }
+
+
+
+
+        if ($request->isMethod('post')){
+
+            $selected_date = $request["date"];
+
+            // 年と月を分割
+            list($year, $month) = explode('-', $selected_date);
+
+            $friendCounts = FriendCount::where('device_id', $id)
+                ->whereYear('created_at', $year)
+                ->whereMonth('created_at', $month)
+                ->get()
+                ->groupBy(function($date) {
+                    return Carbon::parse($date->created_at)->format('d');
+                });
+
+
+                session(['date' => "{$year}年{$month}月"]);
+                $daysData = [];
+                for ($day = 1; $day <= 31; $day++) {
+                    $daysData[$day] = isset($friendCounts[$day]) ? $friendCounts[$day][0]->count : 0;
+                }
+
+        
+
+                return view("device_show", ["url" => $url, "registration_msg" => $registration_msg, "group_msg" => $allMessages, "daysData" => $daysData]);
+
+        }
     }
+
+
+
 
     /**
      * Show the form for editing the specified resource.

@@ -8,11 +8,9 @@ use App\Http\Controllers\RegistrationMessageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return "22";
-});
 
-Route::get("/device", [DeviceController::class, "index"])->name("device")->middleware("auth");
+
+Route::get("/", [DeviceController::class, "index"])->name("device")->middleware("auth");
 Route::get("/login", [AuthController::class, "showLoginForm"])->name("login")->middleware("guest");
 Route::post("/login", [AuthController::class, "login"])->name("login")->middleware("guest");
 Route::get("/signup", [UserController::class, "create"])->name("signup")->middleware("guest");
@@ -25,6 +23,7 @@ Route::post("/devices{id}", [DeviceController::class, "destroy"])->name("device.
 Route::post("/devices/create", [DeviceController::class, "store"])->name("device.store")->middleware("auth");
 
 Route::get("/device/show/{id}", [DeviceController::class, "show"])->name("device.show")->middleware("auth");
+Route::post("/device/show/{id}", [DeviceController::class, "show"])->name("device.show")->middleware("auth");
 Route::post("/url/update/{id}", [MessageUrlController::class, "update"])->name("url.update")->middleware("auth");
 Route::get("/url/edit/{id}", [MessageUrlController::class, "edit"])->name("url.edit")->middleware("auth");
 Route::get("/message/edit/{id}", [RegistrationMessageController::class, "edit"])->name("message.edit")->middleware("auth");
@@ -36,3 +35,5 @@ Route::post("/group_message/update/{id}", [GroupMessageController::class, "updat
 Route::delete("/group_message/delete/{id}", [GroupMessageController::class, "destroy"])->name("group_message.destroy");
 Route::post("/group_message/create", [GroupMessageController::class, "store"])->name("group_message.store")->middleware("auth");
 Route::post("/group_message/is_sent/update/{id}", [GroupMessageController::class, "updateIsSent"])->name("groupMsg.update");
+
+

@@ -129,3 +129,26 @@ const message_create_modal = document.querySelector(".js_group_message_create_mo
 message_create_btn.addEventListener("click", ()=>{
     open_modal(message_create_modal)
 })
+
+
+const select = document.querySelector(".js_select_element");
+const btn = document.querySelector(".js_select_btn")
+
+select.addEventListener("change", (e) => {
+    console.log(e.target.value);  // 選択された値をコンソールに表示
+    let value = e.target.value
+
+    if(value && value !== "日付を選択してください"){
+        btn.classList.remove("disable-btn")
+    }else{
+        btn.classList.add("disable-btn")
+    }
+});
+
+
+const form = document.getElementById("js_date_form");
+form.addEventListener("keydown", (e)=>{
+    if (event.key === 'Enter') {
+        event.preventDefault();  // Enterキーによるデフォルトの動作（送信）を無効化
+    }
+})

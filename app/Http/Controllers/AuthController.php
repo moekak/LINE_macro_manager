@@ -15,7 +15,7 @@ class AuthController extends Controller
     public function login(Request $request){
         $credentials = $request->validate([
             "name" => ["required"],
-            "password" => ["requiwwred"]
+            "password" => ["required"]
         ], [
             "name.required" => "ユーザーネームは必須です。",
             "password.required" => "パスワードは必須です。"
@@ -23,7 +23,7 @@ class AuthController extends Controller
 
         if(Auth::attempt($credentials)){
             $request->session()->regenerate();
-            return redirect()->intended("/device");
+            return redirect()->intended("/");
         }
 
         return back()->withErrors([

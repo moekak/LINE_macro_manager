@@ -10,6 +10,57 @@
             <div class="section__detail-area">
                   <div class="section__detail-area-top">
                         <div class="section__detail-table">
+                              <div class="section__detail-table-flex">
+                                   <h3>登録数</h3>
+                                   @php
+                                          $startYear = 2024;
+                                          $endYear = 2040;
+                                    @endphp
+                                    <form id="js_date_form" action="{{route("device.show", ["id" => request()->route('id')])}}" style="display: flex; gap: 10px;" method="POST">
+                                          @csrf
+                                          <select class="form-select js_select_element" aria-label="Default select example" style="width: max-content;" name="date">
+                                                <option selected>日付を選択してください</option>
+                                                @for ($year = $startYear; $year <= $endYear; $year++)
+                                                      @for ($month = 1; $month <= 12; $month++)
+                                                            <option value="{{ $year }}-{{ str_pad($month, 2, '0', STR_PAD_LEFT) }}" >
+                                                                  {{ $year }}年{{ $month }}月
+                                                            </option>
+                                                      @endfor
+                                                @endfor
+                                        </select>
+                                        <button type="submit" class="btn btn-primary js_select_btn disable-btn">取得</button>
+                                    </form>
+                                  
+                              </div>
+                              
+                                  
+                           <div class="table_container">
+                              <table class="table">
+                                    @if (count($daysData) > 0)
+                                    <h3 style="font-size: 18px; padding: 10px 0;">{{session("date")}}</h3>
+                                          <thead>
+                                                <tr>
+                                                    @for ($day = 1; $day <= 31; $day++)
+                                                        <th scope="col" style="width: 34px;">{{ $day }}日</th>
+                                                    @endfor
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    @for ($day = 1; $day <= 31; $day++)
+                                                        <td>{{ $daysData[$day] }}件</td>
+                                                    @endfor
+                                                </tr>
+                                            </tbody>
+                                            
+
+                                    @endif
+                                   
+                              </table> 
+                           </div>
+                              
+                        </div>
+                        <div class="section__detail-table">
                               <h3>URL</h3>
                              <table class="table">
                                     <thead>
@@ -121,8 +172,7 @@
                                     </tbody>
                               </table> 
                         </div>
-                        
-                        
+  
                   </div>
 
             </div>
