@@ -61,8 +61,8 @@ class DeviceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, $id)
-    {
+    public function show(Request $request, $id){
+
         session(['device_id' => $id]);
 
         $url = MessageUrl::where("device_id", $id)->get();

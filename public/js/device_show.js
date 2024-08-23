@@ -276,5 +276,12 @@ form.addEventListener("keydown", function (e) {
     event.preventDefault(); // Enterキーによるデフォルトの動作（送信）を無効化
   }
 });
+var message_containers = document.querySelectorAll(".js_message_container");
+console.log(message_containers.length);
+if (message_containers.length == 1) {
+  message_containers[0].querySelector(".operation2").querySelector(".js_delete_form").classList.add("hidden");
+} else {
+  message_containers[0].querySelector(".operation2").querySelector(".js_delete_form").classList.remove("hidden");
+}
 /******/ })()
 ;

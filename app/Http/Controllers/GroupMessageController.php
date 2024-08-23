@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateGroupMessageRequest;
 use App\Models\GroupMessage;
 use App\Models\MessageSendingTime;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Events\MessageSending;
 
 class GroupMessageController extends Controller
 {
@@ -36,7 +37,7 @@ class GroupMessageController extends Controller
         $data = [
             "start_id" => '1',
             "end_id" => '0',
-            "is_sent" => '0',
+            "is_sent" => '1',
             "device_id" => $validated["device_id"]
             
         ];
@@ -111,12 +112,22 @@ class GroupMessageController extends Controller
 
 
     public function updateIsSent($id){
-        $data = [
-            "is_sent" => "0"
-        ];
-        MessageSendingTime::where("device_id", $id)->update($data);
 
+        $mesage_sending_data = MessageSendingTime::where("device_id", $id)->first();
+
+        $end_id = $mesage_sending_data["end_id"];
         $device_id = session("device_id");
-        return redirect()->route("device.show", ["id" => $device_id])->with("success", "一斉送信が開始されます。");
+
+        if($end_id != "0"){
+            return redirect()->route("device.show", ["id" => $device_id])->with("success", "一斉送信がまだ終わっていません。配信が終了するまでお待ちください。");
+        }else{
+            $data = [
+                "is_sent" => "0"
+            ];
+            MessageSendingTime::where("device_id", $id)->update($data);
+
+            return redirect()->route("device.show", ["id" => $device_id])->with("success", "一斉送信が開始されます。");
+        }
+        
     }
 }

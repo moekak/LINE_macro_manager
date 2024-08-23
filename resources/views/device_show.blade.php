@@ -132,7 +132,7 @@
                                           @endphp
                                           <form action="{{$url}}" method="post">
                                                 @csrf
-                                                <button type="submit" class="btn btn-success" id="js_create_group_message_btn">送信</button>
+                                                <button type="submit" class="btn btn-success" id="js_submitMsg_btn">送信</button>
                                           </form>
                         
                                    </div>
@@ -161,13 +161,13 @@
                            
                                           @foreach ($group_msg as $msg)
             
-                                          <tr>
+                                          <tr class="js_message_container">
                                                 <td><textarea name="" id="" class="msg_textarea"><?= $msg["message"]?></textarea></td>
                                                 <td><?= $msg["created_at"]?></td>
                                                 <td><?= $msg["updated_at"]?></td>
                                                 <td class="operation2">
                                                       <button class="operation_icon edit_icon js_group_message_edit_btn" data-id="<?= $msg["id"]?>"><img src="{{asset("img/icons8-edit-24.png")}}" alt="" ></button>
-                                                      <form action="{{route('group_message.destroy', ['id' => $msg['id']])}}" method="post">
+                                                      <form action="{{route('group_message.destroy', ['id' => $msg['id']])}}" method="post" class="js_delete_form">
                                                             @csrf
                                                             @method("DELETE")
                                                             <button type="submit" class="operation_icon delete_icon" ><img src="{{asset("img/icons8-delete-24.png")}}" alt=""></button>      
