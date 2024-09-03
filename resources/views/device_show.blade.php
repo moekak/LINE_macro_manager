@@ -58,6 +58,11 @@
                                    
                               </table> 
                            </div>
+                           <div class="section__detail-sum">
+                              <h3 style="font-size: 18px">合計登録者数:　<span style="font-weight: bold">{{$total_friendCount}}件</span></h3>
+                              
+                              
+                           </div>
                               
                         </div>
                         <div class="section__detail-table">
