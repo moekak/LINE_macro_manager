@@ -85,14 +85,17 @@ class DeviceController extends Controller
             // 年と月を分割
             list($year, $month) = explode('-', $today);
 
+           
             $friendCounts = FriendCount::where('device_id', $id)
                 ->whereYear('created_at', $year)
                 ->whereMonth('created_at', $month)
                 ->get()
                 ->groupBy(function($date) {
-                    return Carbon::parse($date->created_at)->format('d');
+                    return Carbon::parse($date->created_at)->format('j');
                 });
 
+                
+          
 
                 session(['date' => "{$year}年{$month}月"]);
                 $daysData = [];
@@ -118,7 +121,7 @@ class DeviceController extends Controller
                 ->whereMonth('created_at', $month)
                 ->get()
                 ->groupBy(function($date) {
-                    return Carbon::parse($date->created_at)->format('d');
+                    return Carbon::parse($date->created_at)->format('j');
                 });
 
 
