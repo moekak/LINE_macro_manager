@@ -102,7 +102,9 @@ class DeviceController extends Controller
                 for ($day = 1; $day <= 31; $day++) {
                     $daysData[$day] = isset($friendCounts[$day]) ? $friendCounts[$day][0]->count : 0;
                 }
+                
         
+
                 return view("device_show", ["url" => $url, "registration_msg" => $registration_msg, "group_msg" => $allMessages, "daysData" => $daysData]);
             }
 
