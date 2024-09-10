@@ -15,7 +15,7 @@
             <input type="password" class="form-control" id="floatingPassword" name="password">
             <label for="floatingPassword">Password</label>
       </div> 
-      <div style="padding-top: 10px"><a href="{{route("signup")}}">signup</a></div>
+      {{-- <div style="padding-top: 10px"><a href="{{route("signup")}}">signup</a></div> --}}
       <button type="submit" class="signup__wrapper-btn">Login →</button>
       <div class="border_bottom"></div>
 </form>

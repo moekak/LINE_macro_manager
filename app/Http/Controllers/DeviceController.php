@@ -79,6 +79,10 @@ class DeviceController extends Controller
         }
 
 
+        // 登録者数の合計
+        $friendCount_total = FriendCount::where('device_id', $id)->sum("count");
+
+
         if($request->isMethod("get")){
             $today = Carbon::today()->format("Y-m");
 
@@ -91,21 +95,24 @@ class DeviceController extends Controller
                 ->whereMonth('created_at', $month)
                 ->get()
                 ->groupBy(function($date) {
+                    // 日付を日によってグループ化
                     return Carbon::parse($date->created_at)->format('j');
+                })
+                ->map(function ($group) {
+                    // 各グループに対して、'count' の合計を計算
+                    return $group->sum('count');
                 });
 
-                
           
 
                 session(['date' => "{$year}年{$month}月"]);
                 $daysData = [];
                 for ($day = 1; $day <= 31; $day++) {
-                    $daysData[$day] = isset($friendCounts[$day]) ? $friendCounts[$day][0]->count : 0;
+                    $daysData[$day] = isset($friendCounts[$day]) ? $friendCounts[$day] : 0;
                 }
                 
         
-
-                return view("device_show", ["url" => $url, "registration_msg" => $registration_msg, "group_msg" => $allMessages, "daysData" => $daysData]);
+                return view("device_show", ["url" => $url, "registration_msg" => $registration_msg, "group_msg" => $allMessages, "daysData" => $daysData, "total_friendCount"=>$friendCount_total]);
             }
 
 
@@ -118,24 +125,31 @@ class DeviceController extends Controller
             // 年と月を分割
             list($year, $month) = explode('-', $selected_date);
 
+            
             $friendCounts = FriendCount::where('device_id', $id)
                 ->whereYear('created_at', $year)
                 ->whereMonth('created_at', $month)
                 ->get()
                 ->groupBy(function($date) {
+                    // 日付を日によってグループ化
                     return Carbon::parse($date->created_at)->format('j');
+                })
+                ->map(function ($group) {
+                    // 各グループに対して、'count' の合計を計算
+                    return $group->sum('count');
                 });
 
+          
 
                 session(['date' => "{$year}年{$month}月"]);
                 $daysData = [];
                 for ($day = 1; $day <= 31; $day++) {
-                    $daysData[$day] = isset($friendCounts[$day]) ? $friendCounts[$day][0]->count : 0;
+                    $daysData[$day] = isset($friendCounts[$day]) ? $friendCounts[$day] : 0;
                 }
 
         
 
-                return view("device_show", ["url" => $url, "registration_msg" => $registration_msg, "group_msg" => $allMessages, "daysData" => $daysData]);
+                return view("device_show", ["url" => $url, "registration_msg" => $registration_msg, "group_msg" => $allMessages, "daysData" => $daysData, "total_friendCount"=>$friendCount_total]);
 
         }
     }

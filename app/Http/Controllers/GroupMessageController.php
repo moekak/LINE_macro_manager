@@ -39,8 +39,9 @@ class GroupMessageController extends Controller
             "end_id" => '0',
             "is_sent" => '1',
             "device_id" => $validated["device_id"]
-            
         ];
+
+
 
         $existingRecord = MessageSendingTime::where("device_id", $data["device_id"])->first();
 
