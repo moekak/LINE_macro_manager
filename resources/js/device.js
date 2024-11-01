@@ -35,7 +35,7 @@ create_btn.addEventListener("click", ()=>{
 })
 
 // ページがロードされた後に5秒待ってメッセージを非表示にする
-     document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
 
       var alert = document.getElementById('js_alert_success');
       if (alert) {
@@ -44,7 +44,7 @@ create_btn.addEventListener("click", ()=>{
             }, 4000); // フェードアウトの完了を待って非表示にする
       }
 
-  });
+});
 
 close_modal()
 
@@ -68,3 +68,29 @@ const setDeviceDataForEditing = (res) =>{
       })
 }
 
+
+// デバイス削除確認モーダル
+
+const delete_btns = document.querySelectorAll(".js_delete_btn")
+const delete_confirm_modal = document.querySelector(".js_delete_modal")
+
+delete_btns.forEach((btn)=>{
+      btn.addEventListener("click", (e)=>{
+            let device_id = e.currentTarget.getAttribute("data-id")
+            // formにパラメータを設置
+            let form = document.getElementById('js_delete_form');
+            let action = form.getAttribute('action');
+            action = action.replace(':id', device_id);
+            form.setAttribute('action', action);
+            open_modal(delete_confirm_modal)
+            console.log(device_id);
+            
+      })
+})
+
+const cancel_btn = document.querySelector(".js_cancel_btn")
+cancel_btn.addEventListener("click", ()=>{
+      const bg          =  document.querySelector(".bg")
+      delete_confirm_modal.classList.add("hidden")
+      bg.classList.add("hidden")
+})

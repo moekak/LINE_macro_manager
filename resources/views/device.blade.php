@@ -8,7 +8,6 @@
                   {{session("success")}}
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-          
       @endif
       
       <div class="section__container-create">
@@ -37,10 +36,10 @@
                                     <td><?= $device["created_at"]?></td>
                                     <td class="operation">
                                           <button class="operation_icon edit_icon js_device_edit_btn" data-id="<?= $device["id"]?>"><img src="{{asset("img/icons8-edit-24.png")}}" alt="" ></button>
-                                          <form action="{{ route('device.destroy', $device['id']) }}" method="post">
-                                                @csrf
-                                                <button type="submit" class="operation_icon delete_icon" data-id="<?= $device["id"]?>"><img src="{{asset("img/icons8-delete-24.png")}}" alt=""></button>      
-                                          </form>
+                                          {{-- <form action="{{ route('device.destroy', $device['id']) }}" method="post">
+                                                @csrf --}}
+                                                <button type="submit" class="operation_icon delete_icon js_delete_btn" data-id="<?= $device["id"]?>"><img src="{{asset("img/icons8-delete-24.png")}}" alt=""></button>      
+                                          {{-- </form> --}}
                                           <a href="{{route("device.show", $device["id"])}}"><button class="operation_icon detail_icon" data-id="<?= $device["id"]?>"><img src="{{asset("img/icons8-link-24.png")}}" alt="" ></button></a>
                                           
                                     </td>
@@ -59,8 +58,8 @@
       @if ($errors->any())
       <div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
             <ul>
-                @foreach ($errors->all() as $error)
-                   <li class="alert_danger">{{$error}}</li>
+                  @foreach ($errors->all() as $error)
+                        <li class="alert_danger">{{$error}}</li>
                   @endforeach  
             </ul>   
       </div>  
@@ -94,8 +93,8 @@
       @if ($errors->any())
       <div class="alert alert-danger alert_danger_container js_alert_danger" role="alert">
             <ul>
-                @foreach ($errors->all() as $error)
-                   <li class="alert_danger">{{$error}}</li>
+                  @foreach ($errors->all() as $error)
+                        <li class="alert_danger">{{$error}}</li>
                   @endforeach  
             </ul>   
       </div>  
@@ -123,6 +122,21 @@
             <button type="submit" class="modal__container-btn">追加</button>
       </form>
 </section>
+
+
+{{-- 削除確認モーダル --}}
+<section class="modal__container js_delete_modal js_modal hidden">
+      <h3 class="modal__container-ttl" style="color: red; font-weight: bold;">本当に削除してもよろしいですか？</h3>
+      <p>このデータを削除すると、関連する全てのデータも削除されます。この操作は取り消せません。削除してよろしいですか？</p>
+      <div class="btn_confirm_container">
+            <div class="confirm_btn cancel_btn js_cancel_btn">キャンセル</div>
+            <form action="{{ route('device.destroy', ['id' => ':id']) }}" method="post"class="confirm_btn delete_btn" id="js_delete_form">
+                  @csrf
+                  <button type="submit">削除</button>
+            </form>
+      </div>
+
+</section>
 @endsection
 @section('script')
       <script src="{{ mix('js/device.js') }}"></script>
@@ -143,8 +157,6 @@
                         action = action.replace(':id', document.querySelector(".js_device_id_input").value);
                         form.setAttribute('action', action)
                   </script>
-                  
-              
             @elseif ($currentRoute === 'device.store')
                   <script>
                         console.log("222");

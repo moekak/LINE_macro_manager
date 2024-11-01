@@ -199,5 +199,27 @@ var setDeviceDataForEditing = function setDeviceDataForEditing(res) {
     resolve();
   });
 };
+
+// デバイス削除確認モーダル
+
+var delete_btns = document.querySelectorAll(".js_delete_btn");
+var delete_confirm_modal = document.querySelector(".js_delete_modal");
+delete_btns.forEach(function (btn) {
+  btn.addEventListener("click", function (e) {
+    var device_id = e.currentTarget.getAttribute("data-id");
+    // formにパラメータを設置
+    var form = document.getElementById('js_delete_form');
+    var action = form.getAttribute('action');
+    action = action.replace(':id', device_id);
+    form.setAttribute('action', action);
+    (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.open_modal)(delete_confirm_modal);
+    console.log(device_id);
+  });
+});
+var cancel_btn = document.querySelector(".js_cancel_btn");
+cancel_btn.addEventListener("click", function () {
+  console.log("2222222");
+  (0,_module_component_modalOperation_js__WEBPACK_IMPORTED_MODULE_0__.close_modal)();
+});
 /******/ })()
 ;

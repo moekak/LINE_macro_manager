@@ -226,3 +226,34 @@ nav {
 .alert-primary{
     width: max-content;
 }
+
+/* デバイス削除確認モーダル */
+.btn_confirm_container{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 5%;
+    gap: 5%;
+}
+.confirm_btn{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cancel_btn {
+    border: 1px solid gray;
+    padding: 6px;
+    border-radius: 111px;
+}
+.delete_btn{
+    background-color: red;
+    color: #fff;
+    padding: 6px;
+    border-radius: 111px;
+}
+.delete_btn button{
+    background: inherit;
+    border: none;
+    color: white;
+}
